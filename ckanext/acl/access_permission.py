@@ -1,6 +1,9 @@
 from ckan.model import Session
 from .model.acl import AccessPermissions as APModel
-import ckan.authz as autz
+try:
+    import ckan.authz as autz
+except ImportError:
+    import ckan.new_authz as autz
 from functools import wraps
 import logging
 log = logging.getLogger(__name__)

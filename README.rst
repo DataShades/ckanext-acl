@@ -37,40 +37,15 @@ ckanext-acl
    Consider including some screenshots or embedding a video!
 
 
-------------
-Requirements
-------------
+Implentation of ACL for ckan.
 
-For example, you might want to mention here which versions of CKAN this
-extension works with.
+When extension enabled, new tab `Permissions` added to admin interface.
+Here you can manage user permissions on per-user level.
 
-
-------------
-Installation
-------------
-
-.. Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
-
-To install ckanext-acl:
-
-1. Activate your CKAN virtual environment, for example::
-
-     . /usr/lib/ckan/default/bin/activate
-
-2. Install the ckanext-acl Python package into your virtual environment::
-
-     pip install ckanext-acl
-
-3. Add ``acl`` to the ``ckan.plugins`` setting in your CKAN
-   config file (by default the config file is located at
-   ``/etc/ckan/default/production.ini``).
-
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
-
-     sudo service apache2 reload
-
+In order to add new managed permission, one should implement `ckanext.acl.interfaces.IACL`
+and define `update_permission_list` method in plugin and change `perm` - first positional argument
+passed into this method. `perms` is `ckanext.acl.access_permissions.AccessPermissions` object so
+you can check available actions there.
 
 ---------------
 Config Settings
@@ -94,6 +69,7 @@ do::
     cd ckanext-acl
     python setup.py develop
     pip install -r dev-requirements.txt
+    paster acl init
 
 
 -----------------

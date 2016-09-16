@@ -82,6 +82,8 @@ setup(
         acl=ckanext.acl.plugin:AclPlugin
 	[babel.extractors]
 	ckan = ckan.lib.extract:extract_ckan
+	[paste.paster_command]
+        acl=ckanext.acl.command:ACLCommand
     ''',
 
     # If you are changing from the default layout of your extension, you may

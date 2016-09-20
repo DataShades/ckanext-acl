@@ -1,32 +1,3 @@
-.. You should enable this project on travis-ci.org and coveralls.io to make
-   these badges work. The necessary Travis and Coverage config files have been
-   generated for you.
-
-.. image:: https://travis-ci.org//ckanext-acl.svg?branch=master
-    :target: https://travis-ci.org//ckanext-acl
-
-.. image:: https://coveralls.io/repos//ckanext-acl/badge.svg
-  :target: https://coveralls.io/r//ckanext-acl
-
-.. image:: https://pypip.in/download/ckanext-acl/badge.svg
-    :target: https://pypi.python.org/pypi//ckanext-acl/
-    :alt: Downloads
-
-.. image:: https://pypip.in/version/ckanext-acl/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-acl/
-    :alt: Latest Version
-
-.. image:: https://pypip.in/py_versions/ckanext-acl/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-acl/
-    :alt: Supported Python versions
-
-.. image:: https://pypip.in/status/ckanext-acl/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-acl/
-    :alt: Development Status
-
-.. image:: https://pypip.in/license/ckanext-acl/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-acl/
-    :alt: License
 
 =============
 ckanext-acl
@@ -42,20 +13,21 @@ Implentation of ACL for ckan.
 When extension enabled, new tab `Permissions` added to admin interface.
 Here you can manage user permissions on per-user level.
 
-In order to add new managed permission, one should implement `ckanext.acl.interfaces.IACL`
-and define `update_permission_list` method in plugin and change `perm` - first positional argument
-passed into this method. `perms` is `ckanext.acl.access_permissions.AccessPermissions` object so
+In order to add new managed permission, one should implement ``ckanext.acl.interfaces.IACL``
+and define ``update_permission_list`` method in plugin and change ``perm`` - first positional argument
+passed into this method. ``perms`` is ``ckanext.acl.access_permissions.AccessPermissions`` object so
 you can check available actions there.
 
----------------
-Config Settings
----------------
+Example of code that you can use in your plugin(will allow any user to create new organization)::
+  from ckanext.acl.interfaces import IACL
 
-Document any optional config settings here. For example::
+  plugins.implements(IACL)
 
-    # The minimum number of hours to wait before re-checking a resource
-    # (optional, default: 24).
-    ckanext.acl.some_setting = some_default_value
+  # IACL
+
+  def update_permission_list(self, perms):
+      perms.create_permission('organization_create')
+
 
 
 ------------------------

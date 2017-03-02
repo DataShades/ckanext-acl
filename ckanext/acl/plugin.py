@@ -4,7 +4,7 @@ from routes.mapper import SubMapper
 import ckanext.acl.logic as acl_logic
 import ckanext.acl.logic.auth as acl_auth
 from .interfaces import IACL
-from . import ORGANIZATION_CREATE
+from . import ORGANIZATION_CREATE, USER_DELETE
 from .access_permission import ACCESS_PERMISSIONS
 
 
@@ -56,3 +56,4 @@ class AclPlugin(plugins.SingletonPlugin):
 
     def update_permission_list(self, perms):
         perms.create_permission(ORGANIZATION_CREATE)
+        perms.create_permission(USER_DELETE)

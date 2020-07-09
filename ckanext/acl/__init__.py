@@ -1,1 +1,1 @@
-ORGANIZATION_CREATE = 'organization_create'
+ORGANIZATION_CREATE = "organization_create"

@@ -1,0 +1,8 @@
+permission_form:
+  filter: rjsmin
+  output: ckanext-acl/%(version)s-permission-form.js
+  extra:
+    preload:
+      - base/main
+  contents:
+    - scripts/acl-permission-form.js

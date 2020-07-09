@@ -1,8 +1,9 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-from routes.mapper import SubMapper
 import ckanext.acl.logic as acl_logic
 import ckanext.acl.logic.auth as acl_auth
+import ckanext.acl.views as views
+import ckanext.acl.cli as cli
 from .interfaces import IACL
 from . import ORGANIZATION_CREATE
 from .access_permission import ACCESS_PERMISSIONS
@@ -10,11 +11,17 @@ from .access_permission import ACCESS_PERMISSIONS
 
 class AclPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IActions)
     plugins.implements(IACL)
     plugins.implements(plugins.IConfigurable)
     plugins.implements(plugins.IAuthFunctions)
+    plugins.implements(plugins.IClick)
+
+    # IClick
+
+    def get_commands(self):
+        return cli.get_commands()
 
     # IAuthFunctions
 
@@ -24,11 +31,10 @@ class AclPlugin(plugins.SingletonPlugin):
     # IConfigurer
 
     def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'acl')
-        if toolkit.check_ckan_version(min_version='2.4'):
-            toolkit.add_ckan_admin_tab(config_, 'manage_permissions', 'Permissions')
+        toolkit.add_template_directory(config_, "templates")
+        toolkit.add_public_directory(config_, "public")
+        toolkit.add_resource("assets", "acl")
+        toolkit.add_ckan_admin_tab(config_, "acl.manage_permissions", "Permissions")
 
     # IConfigurable
 
@@ -37,13 +43,10 @@ class AclPlugin(plugins.SingletonPlugin):
             item.update_permission_list(ACCESS_PERMISSIONS)
         ACCESS_PERMISSIONS.decorate_original()
 
-    # IRoutes
+    # IBluepring
 
-    def before_map(self, map):
-        with SubMapper(map, controller='ckanext.acl.controller:ACLController') as m:
-            m.connect('manage_permissions', '/ckan-admin/manage-permissions',
-                      action='manage_permissions', ckan_icon="unlock-alt")
-        return map
+    def get_blueprint(self):
+        return views.get_blueprints()
 
     # IActions
 

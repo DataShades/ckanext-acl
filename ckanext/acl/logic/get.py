@@ -5,9 +5,8 @@ from ckanext.acl.access_permission import ACCESS_PERMISSIONS
 
 def get_actions_dict():
     return {
-         'access_permission_show': access_permission_show,
+        "access_permission_show": access_permission_show,
     }
-
 
 
 @toolkit.side_effect_free
@@ -19,9 +18,9 @@ def access_permission_show(context, data_dict):
     :type id: string
     :rtype: dictionary
     """
-    model = context['model']
-    context['session'] = model.Session
-    id = toolkit.get_or_bust(data_dict, 'id')
+    model = context["model"]
+    context["session"] = model.Session
+    id = toolkit.get_or_bust(data_dict, "id")
 
     user = model.User.get(id)
     if user:
@@ -30,4 +29,4 @@ def access_permission_show(context, data_dict):
             return perms.as_dict()
         else:
             return {}
-    raise toolkit.ObjectNotFound('User not found')
+    raise toolkit.ObjectNotFound("User not found")

@@ -6,7 +6,7 @@ from ckanext.acl.model.acl import AccessPermissions
 
 def update_actions_dict():
     return {
-        'access_permission_set': access_permission_set,
+        "access_permission_set": access_permission_set,
     }
 
 
@@ -18,13 +18,12 @@ def access_permission_set(context, data_dict):
     :type id: string
     :rtype: dictionary
     """
-    username, perm = toolkit.get_or_bust(data_dict, ['username', 'perm'])
-    toolkit.check_access('update_access_permission', context, data_dict)
+    username, perm = toolkit.get_or_bust(data_dict, ["username", "perm"])
+    toolkit.check_access("update_access_permission", context, data_dict)
     user = model.User.get(username)
     if user is None:
-        raise toolkit.ValidationError('User not found')
-    permissions = ACCESS_PERMISSIONS.get_user_permissions(
-        user.id)
+        raise toolkit.ValidationError("User not found")
+    permissions = ACCESS_PERMISSIONS.get_user_permissions(user.id)
     if not permissions:
         permissions = AccessPermissions(owner_id=user.id)
         model.Session.add(permissions)

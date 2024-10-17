@@ -1,0 +1,41 @@
+[build-system]
+requires = [ "setuptools",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ckanext-acl"
+version = "0.1.2.post1"
+description = ""
+classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10",]
+keywords = [ "CKAN",]
+requires-python = ">= 3.7"
+dependencies = [ ]
+
+[[project.authors]]
+name = "Sergey Motornyuk"
+email = "sergey.motornyuk@linkdigital.com.au"
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.license]
+text = "AGPL"
+
+[project.urls]
+Homepage = "https://github.com//ckanext-acl"
+
+[tool.setuptools]
+include-package-data = true
+[tool.setuptools.package-data]
+"ckanext.acl" = ["assets/**/*", "migration/**/*"]
+
+[project.entry-points."ckan.plugins"]
+acl="ckanext.acl.plugin:AclPlugin"
+
+[tool.pytest.ini_options]
+filterwarnings = [ "ignore::sqlalchemy.exc.SADeprecationWarning", "ignore::sqlalchemy.exc.SAWarning", "ignore::DeprecationWarning",]
+addopts = "--ckan-ini test.ini"
+
+[tool.setuptools.packages]
+find = {}
